@@ -46,7 +46,7 @@ while [[ $PING_COUNT -ne 0 ]] ; do
     then
         PING_COUNT=1                          # If okay, flag to exit loop.
     fi
-    PING_COUNT=$COUNT-1                  # So we don't go forever.
+    PING_COUNT=$PING_COUNT-1                  # So we don't go forever.
 done
 
 if [ $RC -eq 1 ] ; then                  # Make final determination.
