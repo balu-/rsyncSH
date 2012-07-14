@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # call echo $OUTPUT_DEBUG_LEVEL $OUTPUT
 function print
@@ -38,4 +38,23 @@ fi
 
 ##### ende Config #####
 print 3 "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
-#eval "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
+
+while [[ $PING_COUNT -ne 0 ]] ; do
+    ${PING} ${$REMOTE} > /dev/null                      # Try once.
+    RC=$?
+    if [ $RC -eq 0 ]
+    then
+        PING_COUNT=1                          # If okay, flag to exit loop.
+    fi
+    PING_COUNT=$COUNT-1                  # So we don't go forever.
+done
+
+if [ $RC -eq 1 ] ; then                  # Make final determination.
+    print 1 "Could not reach $REMOTE."
+    exit -2
+else
+    print 3 "Ping $REMOTE successfull"
+fi
+
+
+eval "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
