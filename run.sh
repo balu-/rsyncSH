@@ -37,7 +37,6 @@ else
 fi
 
 ##### ende Config #####
-print 3 "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
 
 while [[ $PING_COUNT -ne 0 ]] ; do
     ${PING} ${REMOTE} > /dev/null                      # Try once.
@@ -56,5 +55,7 @@ else
     print 3 "Ping $REMOTE successful"
 fi
 
+
+print 3 "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
 
 eval "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
