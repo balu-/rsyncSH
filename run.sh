@@ -53,7 +53,7 @@ if [ $RC -eq 1 ] ; then                  # Make final determination.
     print 1 "Could not reach $REMOTE."
     exit -2
 else
-    print 3 "Ping $REMOTE successfull"
+    print 3 "Ping $REMOTE successful"
 fi
 
 
