@@ -40,7 +40,7 @@ fi
 print 3 "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
 
 while [[ $PING_COUNT -ne 0 ]] ; do
-    ${PING} ${$REMOTE} > /dev/null                      # Try once.
+    ${PING} ${REMOTE} > /dev/null                      # Try once.
     RC=$?
     if [ $RC -eq 0 ]
     then
