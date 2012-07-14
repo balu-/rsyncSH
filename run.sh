@@ -1,15 +1,41 @@
 #!/bin/sh
-######## Config #########
-REMOTE="qope.de" 					# Rechner auf den gesichert wird
-REMOTEUSER="backup-mailman" 	# User, auf den via ssh ohne Passwort zugegriffen wird
-TARGET="/media/data/backup/mailman/backup"   # Verzeichnis, wohin das Backup geschoben wird
-SUBJECT="Backup_fehlgeschlagen!"    # im Subject kein Leerzeichen!
-INCLUDE="/root/backup/backup.include"    # Dateien, von denen ein Backup gemacht wird
-EXCLUDE="/root/backup/backup.exclude"    # Dateien, von denen kein Backup gemacht wird
 
-RSYNC='/usr/bin/rsync'
-RSYNC_OPTIONS="-rv --compress --numeric-ids --owner --group --times --perms --links --delete-after --ignore-errors -e 'ssh -i /root/.ssh/id_rsa -p 222  -o \"CheckHostIP no\"' --rsync-path='/usr/local/bin/sudo /usr/local/bin/rsync'"
+# call echo $OUTPUT_DEBUG_LEVEL $OUTPUT
+function print
+{
+    if [ $DEBUG -ge $1 ]
+    then
+        echo $2
+    fi
+}
+
+######## get Config #########
+# 0 - no output
+# 1 - error
+# 2 - info
+# 3 - debug
+DEBUG=3
+
+DEFAULT_CONF_FILE="conf.conf"
+LOCAL_CONF_FILE="conf.local"
+
+
+if [ -f ./$DEFAULT_CONF_FILE ]
+then
+        source "./$DEFAULT_CONF_FILE"
+else
+        print 1 "The default configfile ($DEFAULT_CONF_FILE) is missing"
+        exit -1
+fi
+
+if [ -f ./$LOCAL_CONF_FILE ]
+then
+        source "./$LOCAL_CONF_FILE"
+else
+        print 2 "The default configfile ($LOCAL_CONF_FILE) is missing"
+        exit -1
+fi
+
 ##### ende Config #####
-
-
-eval "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
+print 3 "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
+#eval "$RSYNC $RSYNC_OPTIONS $SOURCE $REMOTEUSER\\@$REMOTE\\:$TARGET --files-from=$INCLUDE --exclude-from=$EXCLUDE"
