@@ -1,5 +1,6 @@
 #!/bin/bash
 
+LOCAL_PATH="${0%/*}/"
 # call echo $OUTPUT_DEBUG_LEVEL $OUTPUT
 function print
 {
@@ -16,9 +17,8 @@ function print
 # 3 - debug
 DEBUG=3
 
-DEFAULT_CONF_FILE="conf.conf"
-LOCAL_CONF_FILE="conf.local"
-
+DEFAULT_CONF_FILE="${LOCAL_PATH}conf.conf"
+LOCAL_CONF_FILE="${LOCAL_PATH}conf.local"
 
 if [ -f ./$DEFAULT_CONF_FILE ]
 then
