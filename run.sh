@@ -1,6 +1,8 @@
 #!/bin/bash
 
+#get path for config files
 LOCAL_PATH="${0%/*}/"
+
 # call echo $OUTPUT_DEBUG_LEVEL $OUTPUT
 function print
 {
@@ -20,20 +22,33 @@ DEBUG=3
 DEFAULT_CONF_FILE="${LOCAL_PATH}conf.conf"
 LOCAL_CONF_FILE="${LOCAL_PATH}conf.local"
 
-if [ -f ./$DEFAULT_CONF_FILE ]
+BACKUP_INCLUDE_FILE="${LOCAL_PATH}${INCLUDE}"
+BACKUP_EXCLUDE_FILE="${LOCAL_PATH}${EXCLUDE}"
+
+if [ -f $DEFAULT_CONF_FILE ]
 then
-        source "./$DEFAULT_CONF_FILE"
+        source "$DEFAULT_CONF_FILE"
 else
         print 1 "The default configfile ($DEFAULT_CONF_FILE) is missing"
         exit -1
 fi
 
-if [ -f ./$LOCAL_CONF_FILE ]
+if [ -f $LOCAL_CONF_FILE ]
 then
-        source "./$LOCAL_CONF_FILE"
+        source "$LOCAL_CONF_FILE"
 else
         print 2 "The default configfile ($LOCAL_CONF_FILE) is missing"
         exit -1
+fi
+
+if [ ! -f $BACKUP_INCLUDE_FILE ]
+then 
+    touch $BACKUP_INCLUDE_FILE
+fi
+
+if [ ! -f $BACKUP_EXCLUDE_FILE ]
+then 
+    touch $BACKUP_EXCLUDE_FILE
 fi
 
 ##### ende Config #####
