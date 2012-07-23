@@ -1,7 +1,8 @@
 #!/bin/bash
 
 #get path for config files
-LOCAL_PATH="${0%/*}/"
+LOCAL_PATH=`dirname ${0}`
+LOCAL_PATH="${LOCAL_PATH}/"
 
 # call echo $OUTPUT_DEBUG_LEVEL $OUTPUT
 function print
