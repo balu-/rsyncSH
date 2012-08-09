@@ -23,9 +23,6 @@ DEBUG=3
 DEFAULT_CONF_FILE="${LOCAL_PATH}conf.conf"
 LOCAL_CONF_FILE="${LOCAL_PATH}conf.local"
 
-BACKUP_INCLUDE_FILE="${LOCAL_PATH}${INCLUDE}"
-BACKUP_EXCLUDE_FILE="${LOCAL_PATH}${EXCLUDE}"
-
 if [ -f $DEFAULT_CONF_FILE ]
 then
         source "$DEFAULT_CONF_FILE"
@@ -41,6 +38,9 @@ else
         print 2 "The default configfile ($LOCAL_CONF_FILE) is missing"
         exit -1
 fi
+
+BACKUP_INCLUDE_FILE="${LOCAL_PATH}${INCLUDE}"
+BACKUP_EXCLUDE_FILE="${LOCAL_PATH}${EXCLUDE}"
 
 if [ ! -f $BACKUP_INCLUDE_FILE ]
 then 
